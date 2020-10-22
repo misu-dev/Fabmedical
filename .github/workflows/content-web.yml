@@ -2,28 +2,28 @@ name: content-web
 
 # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
 on:
- push:
-   branches:
-   - master
-   paths:
-   - 'content-web/**'
+  push:
+    branches:
+    - master
+    paths:
+    - 'content-web/**'
 
- # Configure workflow to also support triggering manually
- workflow_dispatch:
-   inputs:
-     logLevel:
-       description: 'Log level'
-       required: true
-       default: 'warning'
+  # Configure workflow to also support triggering manually
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
 
 # Environment variables are defined so that they can be used throughout the job definitions.
 env:
- imageRepository: 'content-web'
- resourceGroupName: 'fabmedical-237249'
- containerRegistryName: 'acr237249'
- containerRegistry: 'acr237249.azurecr.io'
- dockerfilePath: './content-web'
- tag: '${{ github.run_id  }}'
+  imageRepository: 'content-web'
+  resourceGroupName: 'fabmedical-237249'
+  containerRegistryName: 'acr237249'
+  containerRegistry: 'acr237249.azurecr.io'
+  dockerfilePath: './content-web'
+  tag: '${{ github.run_id  }}'
 
 # Jobs define the actions that take place when code is pushed to the master branch
 jobs:
@@ -65,7 +65,7 @@ jobs:
 
     - name: Helm Chart Save
       run: |
-        cd ./content-web/charts/web
+        cd ./charts/web
 
         helm chart save . content-web:v${{ env.tag }}
         helm chart save . ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
